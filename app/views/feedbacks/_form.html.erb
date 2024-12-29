@@ -4,7 +4,7 @@
   <%= link_to "Back to feedbacks", feedbacks_path, class: "underline" %>
 </div>
 
-<%= form_with(model: form, data: { controller: "submit-form", submit_form_target: "form" }, class: "aria-busy:opacity-60 transition-[opacity] duration-200") do |f| %>
+<%= form_with(model: form, data: { controller: "submit-form", submit_form_target: "form" }, class: "aria-busy:opacity-60 transition-[opacity] ease-in duration-200") do |f| %>
   <div class="space-y-5 *:p-5 *:bg-slate-800 *:rounded-md">
     <fieldset>
       <%= f.label :name %>
