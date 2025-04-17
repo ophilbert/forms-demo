@@ -1,17 +1,15 @@
 <%= turbo_refreshes_with(method: :morph, scroll: :preserve) %>
-
 <h1 class="text-3xl font-bold">Feedbacks</h1>
-
 <div class="my-5">
   <%= link_to "New feedback", new_feedback_path, class: "underline" %>
 </div>
-
 <table class="table-auto w-full mt-10 border-collapse">
   <thead>
     <tr class="*:border *:border-gray-500 *:p-5">
       <th>ID</th>
       <th>Name</th>
       <th>Rating</th>
+      <th>Visible</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -21,6 +19,11 @@
         <td><%= "Feedback##{feedback.id}" %></td>
         <td><%= feedback.name %></td>
         <td><%= feedback.rating %></td>
+        <td class='text-center' data-controller="submit-form">
+          <%= form_with model: feedback, data: { submit_form_target: 'form' } do |f| %>
+            <%= f.check_box :visible, data: { action: "change->submit-form#submit" } %>
+          <% end %>
+        </td>
         <td>
           <%= link_to "Edit", edit_feedback_path(feedback) %>
           <%= button_to "Destroy", feedback_path(feedback), method: :delete, data: { turbo_confirm: "Are you sure?" } %>

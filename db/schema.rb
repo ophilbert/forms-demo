@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_07_103509) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_17_081456) do
   create_table "feedbacks", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -20,5 +20,6 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_07_103509) do
     t.text "negative_feedback"
     t.string "how_did_you_hear"
     t.string "how_did_you_hear_other"
+    t.boolean "visible", default: true
   end
 end

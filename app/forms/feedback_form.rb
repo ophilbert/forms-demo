@@ -16,6 +16,7 @@ class FeedbackForm < ApplicationForm
   attribute :how_did_you_hear_other
 
   attribute :terms_of_service, :boolean
+  attribute :visible, :boolean
 
   validates :name, presence: true
   validates :rating, presence: true
@@ -24,7 +25,7 @@ class FeedbackForm < ApplicationForm
 
   def setup(feedback)
     @feedback = feedback
-    self.attributes = feedback.slice(:name, :rating, :positive_feedback, :negative_feedback, :how_did_you_hear, :how_did_you_hear_other)
+    self.attributes = feedback.slice(:name, :rating, :positive_feedback, :negative_feedback, :how_did_you_hear, :how_did_you_hear_other, :visible)
   end
 
   def perform
@@ -34,7 +35,8 @@ class FeedbackForm < ApplicationForm
       positive_feedback:,
       negative_feedback:,
       how_did_you_hear:,
-      how_did_you_hear_other:
+      how_did_you_hear_other:,
+      visible:
     )
   end
 
