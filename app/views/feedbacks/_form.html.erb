@@ -1,9 +1,7 @@
 <%= turbo_refreshes_with(method: :morph, scroll: :preserve) %>
-
 <div class="my-5">
   <%= link_to "Back to feedbacks", feedbacks_path, class: "underline" %>
 </div>
-
 <%= form_with(model: form, data: { controller: "submit-form", submit_form_target: "form" }, class: "aria-busy:opacity-60 transition-[opacity] ease-in duration-200") do |f| %>
   <div class="space-y-5 *:p-5 *:bg-slate-800 *:rounded-md">
     <fieldset>
@@ -21,7 +19,6 @@
         <% end %>
       </div>
     </fieldset>
-
     <% if form.display_final_fields? %>
       <% if form.display_positive_feedback? %>
         <fieldset>
@@ -35,28 +32,31 @@
           <%= f.text_area :negative_feedback %>
         </fieldset>
       <% end %>
-
       <fieldset>
         <%= f.label :how_did_you_hear, "How did you hear about us?" %><br>
         <%= f.select :how_did_you_hear, f.object.class::HOW_DID_YOU_HEAR_OPTIONS, {}, data: { action: "change->submit-form#refresh" } %>
       </fieldset>
-
       <% if form.display_how_did_you_hear_other? %>
         <fieldset>
           <%= f.label :how_did_you_hear_other, "Please specify:" %><br>
           <%= f.text_area :how_did_you_hear_other %>
         </fieldset>
       <% end %>
-
       <fieldset>
         <%= f.check_box :terms_of_service, data: { action: "change->submit-form#refresh" } %>
         <%= f.label :terms_of_service, "I agree to the terms of service" %>
       </fieldset>
-
+      <fieldset>
+        <div id="tags" class='space-y-1.5'>
+          <% form.tags.each do |tag| %>
+            <%= render partial: 'tags/form', locals: { tag: Tag.new(name: tag[:name]) } %>
+          <% end %>
+        </div>
+        <%= link_to 'Add tag', new_tag_url(taggable_type: 'Feedback'), data: { turbo_prefetch: false }, class: "underline" %>
+      </fieldset>
       <fieldset>
         <%= f.submit "Submit", class: "bg-blue-700 text-white px-4 py-2 rounded-md disabled:opacity-50", disabled: form.disabled? %>
       </fieldset>
-
     <% end %>
   </div>
 <% end %>

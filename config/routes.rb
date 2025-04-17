@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "feedbacks#index"
   resources :feedbacks
+  resources :tags, only: [ :new ]
 end

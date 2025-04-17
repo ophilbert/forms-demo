@@ -18,6 +18,8 @@ class FeedbackForm < ApplicationForm
   attribute :terms_of_service, :boolean
   attribute :visible, :boolean
 
+  attribute :tags, default: []
+
   validates :name, presence: true
   validates :rating, presence: true
 
@@ -26,6 +28,7 @@ class FeedbackForm < ApplicationForm
   def setup(feedback)
     @feedback = feedback
     self.attributes = feedback.slice(:name, :rating, :positive_feedback, :negative_feedback, :how_did_you_hear, :how_did_you_hear_other, :visible)
+    self.tags = feedback.tags
   end
 
   def perform
@@ -38,6 +41,10 @@ class FeedbackForm < ApplicationForm
       how_did_you_hear_other:,
       visible:
     )
+
+    tags.each do |tag|
+      @feedback.tags.find_or_create_by(name: tag[:name])
+    end
   end
 
   def display_final_fields?
